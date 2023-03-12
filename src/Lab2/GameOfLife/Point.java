@@ -1,0 +1,77 @@
+package Lab2.GameOfLife;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Point {
+	private ArrayList<Point> neighbors;
+	private int currentState;
+	private int nextState;
+	private int numStates = 6;
+
+	public ArrayList<Integer> aliveRules;
+	public ArrayList<Integer> deadRules;
+	
+	public Point() {
+		currentState = 0;
+		nextState = 0;
+		neighbors = new ArrayList<Point>();
+		aliveRules = new ArrayList<>(Arrays.asList(3));
+		deadRules = new ArrayList<>(Arrays.asList(2,3));
+
+	}
+
+
+	public void clicked() {
+		currentState=(++currentState)%numStates;	
+	}
+	
+	public int getState() {
+		return currentState;
+	}
+
+	public void setState(int s) {
+		currentState = s;
+	}
+
+	public void calculateNewState() {
+		//TODO: insert logic which updates according to currentState and
+		//number of active neighbors
+
+		int alive = this.aliveNeighbors();
+		if (currentState == 1) {
+			if (deadRules.contains(alive)) {
+				this.nextState = 1;
+			} else {
+				this.nextState = 0;
+			}
+		}else {
+			if (aliveRules.contains(alive)){
+				this.nextState = 1;
+			}
+			else {
+				this.nextState = 0;
+			}
+		}
+
+	}
+
+	public void changeState() {
+		currentState = nextState;
+	}
+	
+	public void addNeighbor(Point nei) {
+		neighbors.add(nei);
+	}
+	
+
+	public int aliveNeighbors(){
+		int count = 0;
+		for (Point neighbor : neighbors) {
+			if (neighbor.getState() == 1)
+				count++;
+		}
+
+		return count;
+	}
+}
