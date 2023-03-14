@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
 
 /**
- * Board with Points that may be expanded (with automatic change of cell
+ * Lab3.SoundWave1.Lab3.SoundWave2.Board with Points that may be expanded (with automatic change of cell
  * number) with mouse event listener
  */
 
