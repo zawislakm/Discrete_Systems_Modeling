@@ -1,65 +1,90 @@
-package Lab3;
+package Lab4;
 
 public class Point {
 
-    public Point nNeighbor;
-    public Point wNeighbor;
-    public Point eNeighbor;
-    public Point sNeighbor;
-    public float nVel;
-    public float eVel;
-    public float wVel;
-    public float sVel;
-    public float pressure;
-    public static Integer[] types = {0, 1, 2};
-    public int type;
-    public int sinInput = 0;
+    public Point under = null;
+    public int velocity;
+    public int type = 0; //0 road, 1 car
+    public boolean moved;
+    public Point next;
+    private static int maxVelocity = 5;
+    private static float slowDownVariable = 0.3f; //p variable
 
-    public double freq;
-
-    public double ampl;
 
     public Point() {
-        this.type = 0;
-        clear();
-        ampl = 0.5;
-        freq = 5;
+        velocity = 1;
     }
 
-
-    public void clicked() {
-        pressure = 1;
+    public void allType() {
+        acceleration();
+        slowingDown();
+        randomize();
+        move();
     }
 
-    public void clear() {
-        // TODO: clear velocity and pressure
-        nVel = eVel = wVel = sVel = pressure = 0;
+    public int getState() {
+        return type;
     }
 
-    public void updateVelocity() {
-
-        // TODO: velocity update
-        nVel = nVel - (nNeighbor.pressure - pressure);
-        eVel = eVel - (eNeighbor.pressure - pressure);
-        sVel = sVel - (sNeighbor.pressure - pressure);
-        wVel = wVel - (wNeighbor.pressure - pressure);
-
-    }
-
-    public void updatePresure() {
-        // TODO: pressure update
-        if (type == 0) {
-            pressure = pressure - 0.5f * (nVel + eVel + sVel + wVel);
-        }
-
-        if (type == 2) {
-            double radians = Math.toRadians(sinInput);
-            pressure = (float)( (Math.sin(radians * 2 * Math.PI * freq)) * ampl);
-            sinInput++;
+    public void acceleration() {
+        if (type == 1 && velocity < maxVelocity) {
+            velocity += 1;
         }
     }
 
-    public float getPressure() {
-        return pressure;
+    public void slowingDown() {
+        if (type == 1) {
+            Point nextPoint = this;
+            int dis = 1;
+
+            while (dis <= maxVelocity) {
+                nextPoint = nextPoint.next;
+                if (nextPoint.type == 1) {
+                    break;
+                }
+                dis++;
+            }
+
+            if (dis <= velocity) {
+                velocity = Math.max(dis - 1,0);
+            }
+        }
     }
+
+    public void randomize() {
+        if (type == 1 && velocity >= 1) {
+            if (Math.random() < slowDownVariable) {
+                velocity -= 1;
+            }
+        }
+    }
+
+    public void move() {
+        if (type == 1) {
+            Point nextPoint = this;
+            int i = 0;
+            while (i < velocity) {
+                nextPoint = nextPoint.next;
+                i++;
+            }
+            if (!moved && nextPoint.type == 0) {
+                type = 0;
+                velocity = 0;
+                nextPoint.type = 1;
+                nextPoint.moved = true;
+                nextPoint.velocity = velocity;
+            }
+        }
+    }
+
+
+    public void clicked(int x, int y) {
+        type = 1;
+    }
+
+    public void setState() {
+        type = 0;
+    }
+
+
 }
