@@ -68,11 +68,13 @@ public class Point {
                 i++;
             }
             if (!moved && nextPoint.type == 0) {
-                type = 0;
-                velocity = 0;
+
                 nextPoint.type = 1;
                 nextPoint.moved = true;
                 nextPoint.velocity = velocity;
+
+                type = 0;
+                velocity = 0;
             }
         }
     }
