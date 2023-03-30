@@ -16,9 +16,9 @@ public class Point {
     private static int l_ahead = 5;
     private static int l_back = 5;
     private static int l_ahead_here = 5;
-    private static float overtakeVariable = 1f;
+    private static float overtakeVariable = 0.2f;
     private static float slowDownVariable = 0.5f; //p variable
-//    private int overtakes = 0;
+
 
     public boolean changedLane = false;
 
@@ -29,9 +29,9 @@ public class Point {
     public void allType() {
 
         acceleration();
+        overtake();
         slowingDown();
         randomize();
-        overtake();
         move();
         if (this.downPoint != null) {
             comeback();
@@ -51,6 +51,8 @@ public class Point {
                 this.downPoint.velocity = velocity;
                 this.downPoint.type = 1;
                 this.downPoint.changedLane = true;
+                this.downPoint.move();
+                changedLane = false;
                 velocity = 0;
                 type = 0;
             }
@@ -157,7 +159,6 @@ public class Point {
     }
 
     public void clicked(int x, int y) {
-        System.out.println(this.y);
         if (type == 0)
             type = 1;
     }

@@ -14,6 +14,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
     private int size = 14;
 
     private int wall = 2;
+    private int lane_length = 3;
     private static float disappearVariable = 0.005f;
     private static float appearVariable = 0.1f;
 
@@ -29,8 +30,10 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
     public void iteration() {
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
-                points[x][y].moved = false;
-                points[x][y].changedLane = false;
+                if (points[x][y].type != 2) {
+                    points[x][y].moved = false;
+                    points[x][y].changedLane = false;
+                }
             }
         }
 
@@ -40,7 +43,6 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                     points[x][y].allType();
             }
         }
-
 
 
 //        for (int x = 0; x < points.length; ++x) { //disappearing
@@ -85,20 +87,41 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             }
         }
 
+        for (int x = 0; x < points.length; x++) {
+            points[x][wall + lane_length].type = 2; //between wall
+        }
+
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
                 if (points[x][y].type != 2) {
 
-                    points[x][y].prev = points[(x + points.length - 1) % points.length][y];
-                    points[x][y].next = points[(x + 1) % points.length][y];
+                    if (y > wall + lane_length) { //lower
+                        points[x][y].prev = points[(x + points.length - 1) % points.length][y];
+                        points[x][y].next = points[(x + 1) % points.length][y];
 
-                    if (points[x][y - 1].type != 2) {
+                        if (points[x][y - 1].type != 2) {
 
-                        points[x][y].upPoint = points[x][y - 1];
+                            points[x][y].upPoint = points[x][y - 1];
+                        }
+                        if (points[x][y + 1].type != 2) {
+                            points[x][y].downPoint = points[x][y + 1];
+                        }
+
+                    } else { // upper
+
+                        points[x][y].next = points[(x + points.length - 1) % points.length][y];
+                        points[x][y].prev = points[(x + 1) % points.length][y];
+
+
+                        if (points[x][y - 1].type != 2) {
+
+                            points[x][y].downPoint = points[x][y - 1];
+                        }
+                        if (points[x][y + 1].type != 2) {
+                            points[x][y].upPoint = points[x][y + 1];
+                        }
                     }
-                    if (points[x][y + 1].type != 2) {
-                        points[x][y].downPoint = points[x][y + 1];
-                    }
+
 
                 }
             }
