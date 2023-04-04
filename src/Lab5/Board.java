@@ -33,6 +33,9 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                 if (points[x][y].type != 2) {
                     points[x][y].moved = false;
                     points[x][y].changedLane = false;
+                    if (points[x][y].type == 3) {
+                        points[x][y].type = 1;
+                    }
                 }
             }
         }
@@ -41,6 +44,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             for (int y = 0; y < points[x].length; ++y) {
                 if (points[x][y].type != 2)
                     points[x][y].allType();
+
             }
         }
 
@@ -167,6 +171,8 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                         g.setColor(new Color(0, 0, 0));
                     } else if (points[x][y].type == 2) {
                         g.setColor(new Color(150, 0, 0));
+                    } else if (points[x][y].type == 3) {
+                        g.setColor(new Color(0, 255, 0));
                     }
                     g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
 

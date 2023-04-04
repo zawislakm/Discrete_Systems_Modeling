@@ -112,7 +112,7 @@ public class Point {
 
             Point prevPoint = this.upPoint;
             int distance_back = 0;
-            while (prevPoint != null && distance_back < l_ahead && prevPoint.type != 1) {
+            while (prevPoint != null && distance_back < l_back && prevPoint.type != 1) {
                 prevPoint = prevPoint.prev;
                 distance_back++;
             }
@@ -120,7 +120,7 @@ public class Point {
             boolean flag = Math.random() < overtakeVariable;
 
             if (nextPointhere != null && distance_here < l_ahead_here && distance_up >= l_ahead && distance_back >= l_back && flag) {
-                this.upPoint.type = 1;
+                this.upPoint.type = 3;
                 this.upPoint.velocity = this.velocity;
                 this.upPoint.changedLane = changedLane;
 
@@ -133,7 +133,7 @@ public class Point {
     }
 
     public void move() {
-        if (type == 1) {
+        if (type == 1 || type == 3) {
             Point nextPoint = this;
             int i = 0;
             while (i < velocity && nextPoint.next != null) {
@@ -142,7 +142,7 @@ public class Point {
             }
             if (!moved && nextPoint.type == 0) {
                 nextPoint.changedLane = changedLane;
-                nextPoint.type = 1;
+                nextPoint.type = type;
                 nextPoint.moved = true;
                 nextPoint.velocity = velocity;
 
