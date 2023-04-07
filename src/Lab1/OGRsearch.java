@@ -2,7 +2,7 @@ package Lab1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-// 2/2pts
+
 public class OGRsearch {
 
     public static boolean check(int[] ruler) {
@@ -35,7 +35,7 @@ public class OGRsearch {
             }
             return false;
         }
-        // for to pick next number on ruler, higher than previous and lower end value
+        // loop to pick next number on ruler, higher than previous and lower end value
         for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
             data[index] = arr[i];
             if (combination(arr, data, i + 1, end, index + 1, r)) {

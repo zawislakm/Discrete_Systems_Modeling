@@ -1,7 +1,7 @@
 package Lab1;
 
 import java.util.*;
-// 3/3pts
+
 public class SimpleGenerator {
     // simple generator Golomb Ruler
     // using Wikipedia formula

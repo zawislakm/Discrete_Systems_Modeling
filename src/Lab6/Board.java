@@ -62,7 +62,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
         for (int x = 1; x < points.length - 1; ++x) {
             for (int y = 1; y < points[x].length - 1; ++y) {
 
-                // add neighbours vonNeuman
+                // add neighbours von Neuman
                 points[x][y].addNeighbor(points[x][y + 1]);
                 points[x][y].addNeighbor(points[x + 1][y]);
                 points[x][y].addNeighbor(points[x][y - 1]);
