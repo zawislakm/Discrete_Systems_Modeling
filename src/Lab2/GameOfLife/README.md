@@ -12,7 +12,7 @@
 </div>
 
 <div style="text-align:center">
-    <img src="https://github.com/zawislakm/Discrete_Systems_Modeling_AGH_UST/blob/master/gifs/GameOfLife2.gif" alt="GameOfLife2.gif" width="400" height="400">
+    <img src="https://github.com/zawislakm/Discrete_Systems_Modeling_AGH_UST/blob/master/gifs/GameOfLife2.gif" alt="GameOfLife2.gif" width="1024" height="720">
 </div>
 
 
